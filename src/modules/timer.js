@@ -4,7 +4,6 @@ const timer = (deadline) => {
     const timerSeconds = document.getElementById('timer-seconds');
     let interval;
     
-
     const getTimeRemaining = () => {
         let dateStop = new Date(deadline).getTime();
         let dateNow = new Date().getTime();
@@ -16,7 +15,36 @@ const timer = (deadline) => {
         return {timeRemaining, hours, minutes, seconds};
     };
 
+    const funcFormat = (num) => {
+        if (num < 10) {
+            num = '0' + num;
+        }
+        return num;
+    };
+
     const updateClock = () => {
+        let getTime = getTimeRemaining();
+        timerHours.textContent = funcFormat(getTime.hours);
+        timerMinutes.textContent = funcFormat(getTime.minutes);
+        timerSeconds.textContent = funcFormat(getTime.seconds);
+
+        if (getTime.timeRemaining < 0) {
+            clearInterval(interval);
+            timerHours.textContent = '00';
+            timerMinutes.textContent = '00';
+            timerSeconds.textContent = '00';
+        }
+    };
+    updateClock();
+    interval = setInterval(updateClock, 1000);
+};
+
+export default timer;
+
+
+//Реализация через setInterval; Оставил временно для себя (для нагядности) 
+
+    /* const updateClock = () => {
         let getTime = getTimeRemaining();
         let zeroHours = getTime.hours < 10 ? '0' + getTime.hours : getTime.hours;
         let zeroMinutes = getTime.minutes < 10 ? '0' + getTime.minutes : getTime.minutes;
@@ -33,9 +61,9 @@ const timer = (deadline) => {
             clearInterval(interval);
         }
     };
-    interval = setInterval(updateClock, 1000);
+    interval = setInterval(updateClock, 1000); */
 
-    // Оставил временно для себя (для нагядности) 
+//Реализация через setTimeout; Оставил временно для себя (для нагядности) 
 
     /* const updateClock = () => {
         let getTime = getTimeRemaining();
@@ -49,7 +77,4 @@ const timer = (deadline) => {
         }
     };
     updateClock(); */
-};
-
-export default timer;
 
