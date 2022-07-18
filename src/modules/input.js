@@ -13,47 +13,29 @@ const inputCheck = () => {
     const phoneInputs = document.querySelectorAll('.form-phone');
 
     const numberCheck = (input) => {
-        input.addEventListener('blur', (e) => {
+        input.addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/\D+/, '');
         });
     };
 
     const textCheck = (input) => {
-        input.addEventListener('blur', (e) => {
-            let riteWith = e.target.value.replace(/[^а-яё\-\s+]/gi, ' ');
-            riteWith = riteWith.replace(/^\s+|\s+$/g, '');
-            riteWith = riteWith.replace(/^\-+|\-+$/g, '');
-            riteWith = riteWith.replace(/\s+/g, ' ');
-            riteWith = riteWith.replace(/\-+/g, '-');
-
-            e.target.value = riteWith;
-            let riteWithUp = riteWith[0].toUpperCase() + riteWith.slice(1);
-            e.target.value = riteWithUp;
+        input.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^а-яё\-\s]/i, '');
         });
-
-
     };
 
     const mailCheck = (input) => {
-        input.forEach((e) => {
-            e.addEventListener('blur', () => {
-                let riteWith = e.value.replace(/[^a-z\@\-\_\.\!\~\*\']/i, '');
-                riteWith = riteWith.replace(/^\-+|\-+$/g, '');
-                riteWith = riteWith.replace(/\-+/g, '-');
-
-                e.value = riteWith;
+        input.forEach((item) => {
+            item.addEventListener('input', () => {
+                item.value = item.value.replace(/[^a-z\@\-\_\.\!\~\*\']/i, '');
             });
         });
     };
 
     const phoneCheck = (input) => {
-        input.forEach((e) => {
-            e.addEventListener('blur', () => {
-                let riteWith = e.value.replace(/[^0-9\-\(\)]/gi, '');
-                riteWith = riteWith.replace(/^\-+|\-+$/g, '');
-                riteWith = riteWith.replace(/\-+/g, '-');
-
-                e.value = riteWith;
+        input.forEach((item) => {
+            item.addEventListener('input', () => {
+                item.value = item.value.replace(/[^0-9\-\(\)]/i, '');
             });
         });
     };
