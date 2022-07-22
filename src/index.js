@@ -13,3 +13,4 @@ inputCheck();
 tabs();
 slider('.portfolio-content', '.portfolio-item', '.portfolio-dots');
 calc(100);
+
