@@ -10,33 +10,59 @@ const inputCheck = () => {
     const messageInput = document.getElementById('form2-message');
 
     const emailInputs = document.querySelectorAll('.form-email');
+
     const phoneInputs = document.querySelectorAll('.form-phone');
 
     const numberCheck = (input) => {
-        input.addEventListener('input', (e) => {
+        input.addEventListener('blur', (e) => {
             e.target.value = e.target.value.replace(/\D+/, '');
         });
     };
 
     const textCheck = (input) => {
-        input.addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^а-яё\-\s]/i, '');
+        input.addEventListener('blur', (e) => {
+            let word = e.target.value.replace(/[^а-яё\-\s+]/gi, ' ');
+            word = word.replace(/^\s+|\s+$/g, '');
+            word = word.replace(/^\-+|\-+$/g, '');
+            word = word.replace(/\s+/g, ' ');
+            word = word.replace(/\-+/g, '-');
+
+            e.target.value = word;
+            if (word != '') {
+                e.target.value = word[0].toUpperCase() + word.slice(1);
+            }
         });
+
+
     };
 
     const mailCheck = (input) => {
-        input.forEach((item) => {
-            item.addEventListener('input', () => {
-                item.value = item.value.replace(/[^a-z\@\-\_\.\!\~\*\']/i, '');
+        input.forEach((e) => {
+            e.addEventListener('blur', () => {
+                let word = e.value.replace(/[^a-z\@\-\_\.\!\~\*\'\d]/i, '');
+                word = word.replace(/^\-+|\-+$/g, '');
+                word = word.replace(/\-+/g, '-');
+
+                e.value = word;
             });
         });
     };
 
     const phoneCheck = (input) => {
-        input.forEach((item) => {
-            item.addEventListener('input', () => {
-                item.value = item.value.replace(/[^0-9\-\(\)]/i, '');
+        input.forEach((e) => {
+            e.addEventListener('blur', () => {
+                let word = e.value.replace(/[^0-9\-\(\)\+]/gi, '');
+                word = word.replace(/^\-+|\-+$/g, '');
+                word = word.replace(/\-+/g, '-');
+
+                e.value = word;
             });
+        });
+    };
+
+    const emailRequired = (emails) => {
+        emails.forEach((e) => {
+            e.setAttribute("required", "");
         });
     };
 
@@ -49,7 +75,9 @@ const inputCheck = () => {
     textCheck(footerInput);
     textCheck(messageInput);
 
+    emailRequired(emailInputs);
     mailCheck(emailInputs);
+
     phoneCheck(phoneInputs);
 };
 
